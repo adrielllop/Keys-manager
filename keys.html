@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Key Manager</title>
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* =========================
+   BODY
+========================= */
+
+body {
+    min-height: 100vh;
+    background:
+        radial-gradient(
+            circle at top,
+            #17132d 0%,
+            #09090d 42%,
+            #050507 100%
+        );
+    color: #fff;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    padding: 28px 15px;
+    text-align: center;
+
+    background: rgba(15, 15, 24, .92);
+
+    border-bottom:
+        1px solid #29283b;
+
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    font-size: 28px;
+    font-weight: 800;
+}
+
+header p {
+    color: #8f8f9d;
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.container {
+    width: 92%;
+    max-width: 1150px;
+    margin: 30px auto;
+}
+
+
+/* =========================
+   PAINEL
+========================= */
+
+.panel {
+    background:
+        linear-gradient(
+            145deg,
+            #13131d,
+            #0e0e15
+        );
+
+    border:
+        1px solid #2a2940;
+
+    border-radius: 18px;
+
+    padding: 23px;
+
+    margin-bottom: 32px;
+
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.25);
+}
+
+.panel h2 {
+    margin-bottom: 18px;
+    font-size: 20px;
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+.form {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+
+    width: 100%;
+
+    background: #09090e;
+
+    border:
+        1px solid #34334b;
+
+    border-radius: 10px;
+
+    color: #fff;
+
+    padding: 14px;
+
+    outline: none;
+
+    font-size: 14px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+
+    border-color: #7658ff;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(118,88,255,.12);
+}
+
+textarea {
+
+    grid-column: 1 / -1;
+
+    min-height: 130px;
+
+    resize: vertical;
+}
+
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+
+    border: 0;
+
+    color: #fff;
+
+    padding: 13px 16px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 700;
+
+    transition:
+        transform .15s,
+        opacity .15s;
+}
+
+button:hover {
+
+    transform:
+        translateY(-1px);
+
+    opacity: .9;
+}
+
+.btn-create {
+
+    width: 100%;
+
+    margin-top: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7658ff,
+            #5738e8
+        );
+}
+
+.btn-generate {
+
+    width: 100%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #20c77a,
+            #159c5e
+        );
+}
+
+.btn-add {
+
+    width: 100%;
+
+    margin-top: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4274ff,
+            #3158d9
+        );
+}
+
+.btn-delete {
+
+    width: 100%;
+
+    margin-top: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e34545,
+            #b92e2e
+        );
+}
+
+.btn-copy {
+
+    width: 100%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #7658ff,
+            #5738e8
+        );
+}
+
+.btn-close {
+
+    width: 100%;
+
+    margin-top: 9px;
+
+    background: #30303d;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.title {
+
+    margin-bottom: 16px;
+
+    font-size: 21px;
+}
+
+
+/* =========================
+   PRODUTOS
+========================= */
+
+.products {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(260px, 1fr)
+        );
+
+    gap: 18px;
+}
+
+
+/* =========================
+   CARD
+========================= */
+
+.product {
+
+    background:
+        linear-gradient(
+            145deg,
+            #14141f,
+            #0e0e15
+        );
+
+    border:
+        1px solid #2b2a40;
+
+    border-radius: 17px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 10px 35px
+        rgba(0,0,0,.22);
+}
+
+.product h3 {
+
+    font-size: 20px;
+
+    margin-bottom: 8px;
+
+    word-break: break-word;
+}
+
+.duration {
+
+    color: #a594ff;
+
+    font-size: 14px;
+
+    margin-bottom: 15px;
+}
+
+.stock {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    background: #1a1a25;
+
+    border:
+        1px solid #29283a;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    margin-bottom: 15px;
+
+    color: #aaa;
+}
+
+.stock strong {
+
+    color: #fff;
+
+    font-size: 16px;
+}
+
+
+/* =========================
+   ESGOTADO
+========================= */
+
+.exhausted {
+
+    width: 100%;
+
+    text-align: center;
+
+    color: #ff5656;
+
+    background:
+        rgba(255,60,60,.07);
+
+    border:
+        1px solid
+        rgba(255,60,60,.18);
+
+    border-radius: 10px;
+
+    padding: 13px;
+
+    font-weight: 800;
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty {
+
+    grid-column: 1 / -1;
+
+    padding: 45px 20px;
+
+    text-align: center;
+
+    color: #777;
+
+    border:
+        1px dashed #38374d;
+
+    border-radius: 15px;
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 999;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(0,0,0,.82);
+
+    backdrop-filter:
+        blur(7px);
+}
+
+.modal-box {
+
+    width: 100%;
+
+    max-width: 470px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #161621,
+            #0e0e15
+        );
+
+    border:
+        1px solid #35344d;
+
+    border-radius: 18px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 25px 80px
+        rgba(0,0,0,.55);
+}
+
+.modal-box h2 {
+
+    margin-bottom: 10px;
+
+    font-size: 21px;
+}
+
+.modal-box p {
+
+    color: #999;
+
+    line-height: 1.6;
+
+    margin-bottom: 15px;
+}
+
+
+/* =========================
+   KEY
+========================= */
+
+.key-box {
+
+    background: #08080c;
+
+    border:
+        1px solid #38374d;
+
+    border-radius: 11px;
+
+    padding: 17px;
+
+    margin-bottom: 12px;
+
+    color: #ad9cff;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    word-break: break-all;
+
+    text-align: center;
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 25px;
+
+    transform:
+        translateX(-50%)
+        translateY(100px);
+
+    background: #181822;
+
+    border:
+        1px solid #38374d;
+
+    padding: 13px 18px;
+
+    border-radius: 10px;
+
+    color: #fff;
+
+    z-index: 2000;
+
+    opacity: 0;
+
+    transition:
+        .25s;
+}
+
+.toast.show {
+
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 650px) {
+
+    .form {
+        grid-template-columns: 1fr;
+    }
+
+    textarea {
+        grid-column: auto;
+    }
+
+    header h1 {
+        font-size: 23px;
+    }
+
+    .container {
+        width: 94%;
+    }
+
+    .panel {
+        padding: 18px;
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <h1>🔑 Key Manager</h1>
+
+    <p>
+        Gerencie seus produtos e Keys
+    </p>
+
+</header>
+
+
+<div class="container">
+
+
+    <!-- =========================
+         CRIAR PRODUTO
+    ========================= -->
+
+    <div class="panel">
+
+        <h2>
+            ➕ Criar Produto
+        </h2>
+
+        <div class="form">
+
+            <input
+                id="nomeProduto"
+                type="text"
+                placeholder="Nome do produto"
+            >
+
+
+            <select id="duracao">
+
+                <option value="1 Hora">
+                    1 Hora
+                </option>
+
+                <option value="2 Horas">
+                    2 Horas
+                </option>
+
+                <option value="6 Horas">
+                    6 Horas
+                </option>
+
+                <option value="12 Horas">
+                    12 Horas
+                </option>
+
+                <option value="1 Dia">
+                    1 Dia
+                </option>
+
+                <option value="3 Dias">
+                    3 Dias
+                </option>
+
+                <option value="7 Dias">
+                    7 Dias
+                </option>
+
+                <option value="15 Dias">
+                    15 Dias
+                </option>
+
+                <option value="30 Dias">
+                    30 Dias
+                </option>
+
+                <option value="60 Dias">
+                    60 Dias
+                </option>
+
+                <option value="90 Dias">
+                    90 Dias
+                </option>
+
+                <option value="Vitalício">
+                    Vitalício
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="btn-create"
+            onclick="criarProduto()"
+        >
+
+            ➕ Criar Produto
+
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         LISTA
+    ========================= -->
+
+    <h2 class="title">
+        📦 Produtos
+    </h2>
+
+
+    <div
+        id="products"
+        class="products"
+    ></div>
+
+
+</div>
+
+
+<!-- =========================
+     MODAL ADICIONAR KEYS
+========================= -->
+
+<div
+    id="modalKeys"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <h2>
+            🔑 Adicionar Keys
+        </h2>
+
+        <p
+            id="produtoSelecionado"
+        ></p>
+
+
+        <textarea
+            id="novasKeys"
+            placeholder="Coloque uma Key por linha.
+
+Exemplo:
+KEY-ABC123
+KEY-DEF456
+KEY-GHI789"
+        ></textarea>
+
+
+        <button
+            class="btn-add"
+            onclick="salvarNovasKeys()"
+        >
+
+            ➕ Adicionar Keys
+
+        </button>
+
+
+        <button
+            class="btn-close"
+            onclick="fecharModalKeys()"
+        >
+
+            Cancelar
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =========================
+     MODAL KEY GERADA
+========================= -->
+
+<div
+    id="modalKey"
+    class="modal"
+>
+
+    <div class="modal-box">
+
+        <h2>
+            🎉 Key gerada!
+        </h2>
+
+
+        <p
+            id="infoKey"
+        ></p>
+
+
+        <div
+            id="keyGerada"
+            class="key-box"
+        ></div>
+
+
+        <button
+            class="btn-copy"
+            onclick="copiarKey()"
+        >
+
+            📋 Copiar Key
+
+        </button>
+
+
+        <button
+            class="btn-close"
+            onclick="fecharModalKey()"
+        >
+
+            Fechar
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    id="toast"
+    class="toast"
+></div>
+
+
+<script>
+
+/* =====================================================
+   BANCO LOCAL
+===================================================== */
+
+let produtos =
+    JSON.parse(
+        localStorage.getItem(
+            "key_manager_produtos"
+        )
+    ) || [];
+
+
+let produtoParaKeys = null;
+
+
+/* =====================================================
+   SALVAR
+===================================================== */
+
+function salvar() {
+
+    localStorage.setItem(
+        "key_manager_produtos",
+        JSON.stringify(produtos)
+    );
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function mostrarToast(mensagem) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+    toast.textContent = mensagem;
+
+    toast.classList.add("show");
+
+    setTimeout(() => {
+
+        toast.classList.remove("show");
+
+    }, 2200);
+
+}
+
+
+/* =====================================================
+   CRIAR PRODUTO
+===================================================== */
+
+function criarProduto() {
+
+    const nome =
+        document
+        .getElementById(
+            "nomeProduto"
+        )
+        .value
+        .trim();
+
+
+    const duracao =
+        document
+        .getElementById(
+            "duracao"
+        )
+        .value;
+
+
+    if (!nome) {
+
+        mostrarToast(
+            "⚠️ Digite o nome do produto."
+        );
+
+        return;
+    }
+
+
+    const produto = {
+
+        id:
+            Date.now() +
+            Math.floor(
+                Math.random() * 1000
+            ),
+
+        nome: nome,
+
+        duracao: duracao,
+
+        keys: []
+
+    };
+
+
+    produtos.push(produto);
+
+    salvar();
+
+    renderizar();
+
+
+    document
+        .getElementById(
+            "nomeProduto"
+        )
+        .value = "";
+
+
+    mostrarToast(
+        "✅ Produto criado!"
+    );
+
+}
+
+
+/* =====================================================
+   RENDERIZAR
+===================================================== */
+
+function renderizar() {
+
+    const container =
+        document.getElementById(
+            "products"
+        );
+
+
+    container.innerHTML = "";
+
+
+    if (
+        produtos.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                📦 Nenhum produto criado ainda.
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    produtos.forEach(
+        produto => {
+
+            const quantidade =
+                produto.keys.length;
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "product";
+
+
+            let botaoGerar;
+
+
+            if (
+                quantidade === 0
+            ) {
+
+                botaoGerar = `
+
+                    <div class="exhausted">
+
+                        ❌ Keys esgotadas
+
+                    </div>
+
+                `;
+
+            } else {
+
+                botaoGerar = `
+
+                    <button
+                        class="btn-generate"
+                        onclick="gerarKey(${produto.id})"
+                    >
+
+                        🎁 Gerar Key
+
+                    </button>
+
+                `;
+
+            }
+
+
+            div.innerHTML = `
+
+                <h3>
+
+                    🎁
+                    ${escapeHTML(
+                        produto.nome
+                    )}
+
+                </h3>
+
+
+                <div class="duration">
+
+                    ⏱️ Duração:
+                    ${escapeHTML(
+                        produto.duracao
+                    )}
+
+                </div>
+
+
+                <div class="stock">
+
+                    <span>
+                        🔑 Keys disponíveis
+                    </span>
+
+                    <strong>
+                        ${quantidade}
+                    </strong>
+
+                </div>
+
+
+                ${botaoGerar}
+
+
+                <button
+                    class="btn-add"
+                    onclick="abrirModalKeys(${produto.id})"
+                >
+
+                    ➕ Adicionar Keys
+
+                </button>
+
+
+                <button
+                    class="btn-delete"
+                    onclick="excluirProduto(${produto.id})"
+                >
+
+                    🗑️ Excluir Produto
+
+                </button>
+
+            `;
+
+
+            container.appendChild(
+                div
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ABRIR MODAL DE KEYS
+===================================================== */
+
+function abrirModalKeys(id) {
+
+    const produto =
+        produtos.find(
+            p => p.id === id
+        );
+
+
+    if (!produto) {
+        return;
+    }
+
+
+    produtoParaKeys = id;
+
+
+    document
+        .getElementById(
+            "produtoSelecionado"
+        )
+        .textContent =
+        "Produto selecionado: " +
+        produto.nome;
+
+
+    document
+        .getElementById(
+            "novasKeys"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "modalKeys"
+        )
+        .style.display = "flex";
+
+}
+
+
+/* =====================================================
+   SALVAR NOVAS KEYS
+===================================================== */
+
+function salvarNovasKeys() {
+
+    if (
+        produtoParaKeys === null
+    ) {
+
+        return;
+    }
+
+
+    const texto =
+        document
+        .getElementById(
+            "novasKeys"
+        )
+        .value
+        .trim();
+
+
+    if (!texto) {
+
+        mostrarToast(
+            "⚠️ Digite pelo menos uma Key."
+        );
+
+        return;
+    }
+
+
+    const novasKeys =
+        texto
+        .split(/\r?\n/)
+        .map(
+            key => key.trim()
+        )
+        .filter(
+            key => key !== ""
+        );
+
+
+    const produto =
+        produtos.find(
+            p =>
+                p.id ===
+                produtoParaKeys
+        );
+
+
+    if (!produto) {
+        return;
+    }
+
+
+    /* Evita adicionar Keys vazias */
+
+    produto.keys.push(
+        ...novasKeys
+    );
+
+
+    salvar();
+
+    renderizar();
+
+    fecharModalKeys();
+
+
+    mostrarToast(
+        "✅ " +
+        novasKeys.length +
+        " Key(s) adicionada(s)!"
+    );
+
+}
+
+
+/* =====================================================
+   GERAR KEY
+===================================================== */
+
+function gerarKey(id) {
+
+    const produto =
+        produtos.find(
+            p => p.id === id
+        );
+
+
+    if (!produto) {
+        return;
+    }
+
+
+    if (
+        produto.keys.length === 0
+    ) {
+
+        mostrarToast(
+            "❌ Keys esgotadas!"
+        );
+
+        return;
+    }
+
+
+    /*
+       IMPORTANTE:
+
+       A Key não é criada
+       aleatoriamente.
+
+       Ela é retirada do
+       estoque cadastrado.
+    */
+
+    const key =
+        produto.keys.shift();
+
+
+    salvar();
+
+    renderizar();
+
+
+    document
+        .getElementById(
+            "infoKey"
+        )
+        .innerHTML = `
+
+            Produto:
+            <strong>
+                ${escapeHTML(
+                    produto.nome
+                )}
+            </strong>
+
+            <br>
+
+            Duração:
+            ${escapeHTML(
+                produto.duracao
+            )}
+
+        `;
+
+
+    document
+        .getElementById(
+            "keyGerada"
+        )
+        .textContent = key;
+
+
+    document
+        .getElementById(
+            "modalKey"
+        )
+        .style.display = "flex";
+
+}
+
+
+/* =====================================================
+   COPIAR KEY
+===================================================== */
+
+async function copiarKey() {
+
+    const key =
+        document
+        .getElementById(
+            "keyGerada"
+        )
+        .textContent
+        .trim();
+
+
+    if (!key) {
+
+        mostrarToast(
+            "⚠️ Nenhuma Key para copiar."
+        );
+
+        return;
+    }
+
+
+    /*
+       Clipboard API
+    */
+
+    try {
+
+        if (
+            navigator.clipboard &&
+            window.isSecureContext
+        ) {
+
+            await navigator
+                .clipboard
+                .writeText(key);
+
+            mostrarToast(
+                "✅ Key copiada!"
+            );
+
+            return;
+        }
+
+
+        /* Fallback */
+
+        copiarFallback(key);
+
+    }
+
+    catch (erro) {
+
+        copiarFallback(key);
+
+    }
+
+}
+
+
+/* =====================================================
+   FALLBACK DE CÓPIA
+===================================================== */
+
+function copiarFallback(texto) {
+
+    const textarea =
+        document.createElement(
+            "textarea"
+        );
+
+
+    textarea.value =
+        texto;
+
+
+    textarea.style.position =
+        "fixed";
+
+    textarea.style.opacity =
+        "0";
+
+
+    document.body.appendChild(
+        textarea
+    );
+
+
+    textarea.focus();
+
+    textarea.select();
+
+
+    try {
+
+        document.execCommand(
+            "copy"
+        );
+
+        mostrarToast(
+            "✅ Key copiada!"
+        );
+
+    }
+
+    catch (erro) {
+
+        mostrarToast(
+            "⚠️ Selecione e copie a Key manualmente."
+        );
+
+    }
+
+
+    textarea.remove();
+
+}
+
+
+/* =====================================================
+   FECHAR MODAL KEYS
+===================================================== */
+
+function fecharModalKeys() {
+
+    document
+        .getElementById(
+            "modalKeys"
+        )
+        .style.display = "none";
+
+
+    produtoParaKeys = null;
+
+}
+
+
+/* =====================================================
+   FECHAR MODAL KEY
+===================================================== */
+
+function fecharModalKey() {
+
+    document
+        .getElementById(
+            "modalKey"
+        )
+        .style.display = "none";
+
+}
+
+
+/* =====================================================
+   EXCLUIR PRODUTO
+===================================================== */
+
+function excluirProduto(id) {
+
+    const produto =
+        produtos.find(
+            p => p.id === id
+        );
+
+
+    if (!produto) {
+        return;
+    }
+
+
+    const confirmar =
+        confirm(
+            "Excluir o produto \"" +
+            produto.nome +
+            "\"?"
+        );
+
+
+    if (!confirmar) {
+        return;
+    }
+
+
+    produtos =
+        produtos.filter(
+            p => p.id !== id
+        );
+
+
+    salvar();
+
+    renderizar();
+
+
+    mostrarToast(
+        "🗑️ Produto excluído."
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
+
+function escapeHTML(texto) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        texto;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   FECHAR MODAIS AO CLICAR FORA
+===================================================== */
+
+document
+    .getElementById("modalKeys")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                this
+            ) {
+
+                fecharModalKeys();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById("modalKey")
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target ===
+                this
+            ) {
+
+                fecharModalKey();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+renderizar();
+
+</script>
+
+</body>
+</html>
